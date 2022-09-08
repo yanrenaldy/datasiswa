@@ -10,7 +10,7 @@ import {
 import "react-pro-sidebar/dist/css/styles.css";
 import { Routes, Route, Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
-import { Home, Test1 } from "../../pages";
+import { Home, Test1, DataSiswa } from "../../pages";
 
 function Sidebar() {
   return (
@@ -26,8 +26,8 @@ function Sidebar() {
                       <Link to="/" />
                     </MenuItem>
                     <SubMenu title="Data Siswa">
-                      <MenuItem>Daftar Siswa </MenuItem>
-                      <MenuItem>Absensi</MenuItem>
+                      <MenuItem>Daftar Siswa<Link to="/siswa"/> </MenuItem>
+                      <MenuItem>Absensi<Link to="/test"/></MenuItem>
                     </SubMenu>
                     <MenuItem>Kelas</MenuItem>
                     <MenuItem>Tahun Ajaran</MenuItem>
@@ -40,6 +40,7 @@ function Sidebar() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/test" element={<Test1 />} />
+              <Route path="/siswa" element={<DataSiswa />} />
             </Routes>
           </Col>
         </Row>

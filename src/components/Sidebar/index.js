@@ -3,7 +3,6 @@ import {
   ProSidebar,
   SidebarHeader,
   SidebarContent,
-  SidebarFooter,
   Menu,
   MenuItem,
   SubMenu,

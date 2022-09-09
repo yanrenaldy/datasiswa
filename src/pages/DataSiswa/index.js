@@ -5,6 +5,7 @@ import axios from "axios";
 import { API_URL } from "../../utils/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import LoadingPage from "../../components/LoadingPage";
 
 function DataSiswa() {
   const [tahunAjaran, settahunAjaran] = useState([]);
@@ -13,6 +14,8 @@ function DataSiswa() {
     ta: "",
     kelas: "",
   });
+  const [dataKelas, setdataKelas] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -40,6 +43,22 @@ function DataSiswa() {
     };
   }, []);
 
+  useEffect(() => {
+    let isMounted = true;
+    axios
+      .get(
+        API_URL + "datasiswa/" + dataArray.kelas + "&" + dataArray.ta
+      )
+      .then((response) => response.data)
+      .then((data) => {
+        if (isMounted) setdataKelas(data);
+        setLoading(false)
+      });
+    return () => {
+      isMounted = false;
+    };
+  },);
+
   const onChange = (e) => {
     const { name, value } = e.target;
     setdataArray((prevState) => ({
@@ -47,6 +66,11 @@ function DataSiswa() {
       [name]: value,
     }));
   };
+
+  const onClick = () => {
+    setLoading(true)
+    
+  }
 
   return (
     <div>
@@ -84,12 +108,16 @@ function DataSiswa() {
             </Form.Select>
           </Col>
           <Col xs={1}>
-            <Button variant="primary">Pilih</Button>
+            <Button variant="primary" onClick={onClick}>Pilih</Button>
           </Col>
         </Row>
       </div>
+      {loading ? (
+          <LoadingPage />
+        ) : (
+      <div></div>)}
     </div>
-  );
+  )
 }
 
 export default DataSiswa;
